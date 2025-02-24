@@ -1,0 +1,26 @@
+$body-bg: #f0f8ff;
+$navbar-bg: rgb(0, 0, 97);
+$headings-color: navy;
+
+body {
+  background-color: $body-bg;
+}
+
+nav, footer {
+  background-color: $navbar-bg;
+}
+
+h2, h3 {
+  color: $headings-color;
+}
+
+.bg-light-blue { background-color: #dbeafe; }
+        .card { text-align: left; min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card p { min-height: 48px; }
+        .review-stars { margin-top: auto; padding-top: 10px; margin-bottom: 30px;}
+        .customer-reviews-title { margin-top: 50px; }
+        .form-control::placeholder { color: #bbb; }
+        .form-label { font-weight: normal; }
+        .input-group-text { background-color: #f8f9fa; color: #6c757d; }
+        .form-control { border-left: 1px solid #dce1e6; }
+        .form-control:focus { box-shadow: none; border-color: #1e90ff; }
