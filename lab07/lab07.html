@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab07</title>
+</head>
+<body>
+
+    <script>
+        // #1 Logging Text and Variables
+        let favNumber = 1;
+        console.log("My favorite number is " + favNumber + ".");
+    </script>
+
+    <script>
+        // #2 Arrays
+        let favoriteFoods = ["Pizza", "Sushi", "Burgers", "Pasta"];
+        console.log("Second favorite food: " + favoriteFoods[1]);
+        favoriteFoods.push("Ice Cream");
+        console.log("Updated favorite foods list:", favoriteFoods);
+
+        // #3 Looping through an Array
+        console.log("\n--- Full List of Favorite Foods ---");
+        for (let i = 0; i < favoriteFoods.length; i++) {
+            console.log("Favorite Food " + (i + 1) + ": " + favoriteFoods[i]);
+        }
+
+        // #4 Filtering an Array
+        console.log("\n--- Filtered List ---");
+        for (let i = 0; i < favoriteFoods.length; i++) {
+            if (i === 1) continue;
+            console.log("Filtered Favorite Food " + (i + 1) + ": " + favoriteFoods[i]);
+        }
+    </script>
+
+    <script>
+        // #5 Objects
+        console.log("\n--- Book ---");
+        let book = {
+            title: "The Great Gatsby",
+            author: "F. Scott Fitzgerald",
+            yearPublished: 1925,
+            isAvailable: true
+        };
+
+        console.log("Book Title: " + book.title);
+        console.log("Author: " + book.author);
+
+        if (book.isAvailable) {
+            console.log("This book is available for checkout.");
+        } else {
+            console.log("Sorry, this book is currently checked out.");
+        }
+
+        // #6 While Loop
+        console.log("\n--- Even Numbers up to 20 ---");
+        let num = 0;
+        while (num <= 20) {
+            console.log(num);
+            num += 2;
+        }
+
+        // #7 Random Number
+        console.log("\n--- Random Number ---");
+        let diceRoll = Math.floor(Math.random() * 6) + 1;
+        console.log("You rolled a " + diceRoll);
+    </script>
+</body>
+</html>
