@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Recommendation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-title">Movie Recommendation</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </header>
+
+  <!-- Main Heading -->
+  <h1>🔥 Top 10 Trending Movies You Shouldn't Miss! 🔥</h1>
+
+  <!-- Movie Cards -->
+  <div class="movie-grid" id="movie-grid"></div>
+
+  <!-- Footer -->
+  <footer>
+    Created by Yuntian Jiang — A website showcasing real-time movie data with trailers using TMDB and YouTube APIs.
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const TMDB_API_KEY = '71481accc9739391afe3e0583afdcb88';
+    const YOUTUBE_API_KEY = 'AIzaSyCqgXLZi7Mh-BV0ZcvpIiz-2chZe8JRPdA';
+
+    const TMDB_API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`;
+
+    async function getTrailerVideoId(query) {
+      const YT_API_URL = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&part=snippet&maxResults=1&q=${encodeURIComponent(query + ' trailer')}`;
+      try {
+        const response = await fetch(YT_API_URL);
+        const data = await response.json();
+        if (data.items && data.items.length > 0) {
+          return data.items[0].id.videoId;
+        } else {
+          return null;
+        }
+      } catch (error) {
+        console.error('YouTube API Error:', error);
+        return null;
+      }
+    }
+
+    async function loadMovies() {
+      try {
+        const res = await fetch(TMDB_API_URL);
+        const data = await res.json();
+        const movies = data.results.slice(0, 10);
+        const grid = document.getElementById('movie-grid');
+
+        for (const movie of movies) {
+          const card = document.createElement('div');
+          card.className = 'movie-card';
+
+          const posterUrl = movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+            : 'https://via.placeholder.com/300x450?text=No+Image';
+
+          const videoId = await getTrailerVideoId(movie.title);
+
+          card.innerHTML = `
+            <img src="${posterUrl}" alt="${movie.title}" />
+            <div class="movie-title">${movie.title}</div>
+            <div class="movie-overview">${movie.overview.slice(0, 100)}...</div>
+            <div>⭐ <strong>Rating:</strong> ${movie.vote_average} / 10</div>
+            <div>🔥 <strong>Popularity:</strong> ${Math.round(movie.popularity)}</div>
+            <div><em>Release: ${movie.release_date}</em></div>
+            ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>` : '<p><em>No trailer found.</em></p>'}
+            `;
+          grid.appendChild(card);
+        }
+      } catch (err) {
+        console.error('TMDB Error:', err);
+      }
+    }
+
+    loadMovies();
+  </script>
+</body>
+</html>
